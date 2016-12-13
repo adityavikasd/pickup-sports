@@ -1,0 +1,66 @@
+Database Schema
+
+MySQL database has been used in the backend to store the required information for different users and events that they created. The tables involved for this purpose are as follows:
+
+1. users: This table is used to store the information and description of the users registered for the application. The columns involved in this table are as follows:
+	1. id: each user is assigned a unique ID, which is used to identify the user in the application. This column will serve as the primary key of the user's table.
+	2. email: This field is unique and represents the email address of the user to register for the application. This email address will be used for the user to login to the application.
+	3. passwordHash: This field will store the password that the user used when they register for the application. Instead of the plain text password, the hash of the password is stored in this table column.
+	4. creationTime: This field will store the date and time of user registeration. This field can be used in calculating the reputation of the user.
+	5. displayName: This field will store the user's name. This is the combination of the user's first and last name.
+	6. lastAccessDate: This field will store date and time of the user's last access to the application.
+	7. location: This field stored the geographical location of the user.
+	8. totalEventsHosted: This field stores the number of events hosted by the user. This count will be used to calculate the reputation of the user.
+	9. totalEventsAttended: This field stores the number of events(those hosted by other users) that the user attended. This count will also be used to calculate the reputation of the user.
+	10. age: This field stores the biological age of the user.
+	11. aboutMe: This field stores a brief description of the user.
+	12. reputation: This field stores a score for each user. This will be used to calculate the rank for the user amoung all the users of the application.
+	13. tags: This field stores the tags associated with each user. These tags represent the sports that the user is interested to attend. Each user can have multiple tags associated to them.
+
+
+2. events: This table stores the information and description of the events created by the user. The columns in this table are as follows:
+	1. id: Each event is assigned a unique number to identify the event uniquely. This column serves as the primary key of the event's table.
+	2. title: This field stores the title for each event.
+	3. creationTime: This field stores the date and time when the event starts. 
+	4. ownerId: This field stores the user-id of the owner who created the event. This field serves as foreign key that references the 'id' column of the 'users' table.
+	5. OwnerName: This field stores the display name of the user who created the event.
+	6. participantCount: This field stores the number of participants required for the event.
+	7. description: This field stores the event's description.
+	8. address, city, state, zip, country: These fields stores the geographical location of the event.
+	9. closedDate: This field stores the event's end date and time.
+	10. tags: This field stores the tag or the sport involved for the event. Each event can have only one tag associated with it.
+
+
+3. event_attendees: This table stores the list of users interested in attending the events. The fields in this table are as below:
+	1. userId: The field stores the user-id of the user interested in a particular event. This field serves as a foreign key that references the 'id' column in the 'users' table.
+	2. eventId: This field stores id of the event that the user is interested in. This field serves as a foreign key that references the 'id' column in the 'events' table.
+
+	The combination of both the above columns serve as the primary key to the table.
+
+
+
+
+
+Different Actions:
+
+1. User Registeration:
+Users interested in the application must sign up for the application using their email address and a unique password. This creates a record of the user in the 'users' table, assigning each user an unique identification number - 'id'.	
+
+2. Creating/Hosting an Event: 
+Users can create/host events involving different sports. This activity allows the users to host an event of their choice by specifying the location, number of participants required for the event, date, time and location of the event. These events will be displayed to other users who are interested in the sport associated with the event. When an user creates an event, a record is created in the 'events' table to uniquely identify the event.
+
+3. Attend an Event:
+Each user interested in the event can mark their attendance for the event by clicking on the interested button. This will mark the user's attendance to a particular event. When a user marks his/her interest for an event, a row is created in the 'event_attendees' table, with the user id of the interested user and the event id of the specific event that the user is interested.
+
+4. View Different Events:
+Each users home page displays a list of events corresponding to the tags logged in user's tags of interest. The user can mark their interest by clicking on the buttons corresponding to the event.
+'My Events' page displays the events that are hosted by the logged in user. The user can delete and modify an existing event. 
+'Upcoming Events' page displays the list of future events that the user has marked or showed his/her interest.
+
+5. Leader Board:
+This page displays the list of all the registed users of the application ordered by their scores. The scores are calculated based on the number of events hosted, attended and the number of days elapsed since the date they registed for the application. 
+20 points are awarded for each hosted application. 5 points are awared for each event that the user has attended and 2 points are awarded for each day since the user has registered for the application.
+The users are ranked based on the score calculated by the points awarded.
+
+6. User's Profile:
+This page displays the information and the score for the logged in user. Using this page, the user can update their profile and the sports that they are interested. 
